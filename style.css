@@ -1,0 +1,380 @@
+/* Reset margin and padding for all elements, use border-box model, and apply 'Poppins' font globally */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    cursor: none; /* Hide default cursor */
+}
+
+/* Smooth vertical scrolling with mandatory snap behavior for full-page sections */
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+}
+
+/* Prevent horizontal scrolling due to overflow */
+body {
+    overflow-x: hidden;
+    background-image: url('/Users/mukhlisamamatova/Desktop/PORTFOLIO/star.jpeg'); /* Fallback plaid background */
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* ===== CUSTOM CURSOR STYLES ===== */
+.custom-cursor {
+    position: fixed;
+    width: 24px;
+    height: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M12 0L14.59 8.41 23 12 14.59 15.59 12 24 9.41 15.59 1 12 9.41 8.41z'/%3E%3C/svg%3E");
+    background-size: contain;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+    display: none; /* Initially hidden, shown in JS */
+}
+
+/* ===== SECTION STYLES ===== */
+section {
+    height: 100vh; /* Full viewport height */
+    scroll-snap-align: start; /* Snap each section to top */
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+/* Show section when 'visible' class is added */
+section.visible {
+    opacity: 1;
+}
+
+/* Content container for proper positioning */
+.content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 80px 20px 20px 20px; /* Top padding allows for nav bar space */
+    z-index: 1;
+}
+
+/* SECTION BACKGROUND COLORS - semi-transparent overlays on the plaid background */
+#homepage {
+    background-color: rgba(83, 83, 81, 0.348); /* Light cream with transparency */
+}
+
+#about {
+    background-color: rgba(83, 83, 81, 0.348); /* Soft pink with transparency */
+}
+
+#projects {
+    background-color: rgba(83, 83, 81, 0.348); /* Light sage with transparency */
+}
+
+#contact {
+    background-color: rgba(83, 83, 81, 0.348); /* Light cream with transparency */
+}
+
+/*NAVIGATION STYLES*/
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(66, 71, 105, 0.796); /* Light cream with transparency */
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Remove bullet points and display nav items in a row */
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+/* Space out nav links */
+nav ul li {
+    margin: 0 15px;
+}
+
+/* Style links and add hover effect */
+nav ul li a {
+    text-decoration: none;
+    color: rgb(255, 255, 255); /* Sage green for links */
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: rgb(138, 192, 239); /* Soft pink on hover */
+}
+
+/*HOMEPAGE SECTION */
+/* Image that rotates infinitely */
+.rotating-image {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 30px;
+    animation: rotate 20s linear infinite;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+section.visible .rotating-image {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Keyframe for continuous rotation */
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Welcome text styling */
+.welcome-text {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: rgb(255, 255, 255); /* Sage green text */
+    text-shadow: 1px 1px 2px rgba(135, 133, 250, 0.293); /* Soft shadow for legibility */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s; /* Delayed animation */
+}
+
+section.visible .welcome-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/*ABOUT SECTION ("Who am I?")*/
+/* Horizontally scrolling row of cards */
+.horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 1200px;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* Individual card styling */
+.about-card {
+    min-width: 300px;
+    height: 400px;
+    scroll-snap-align: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.214);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: transform 0.5s ease, opacity 0.5s ease, filter 0.3s ease;
+}
+
+/* Animation class for about cards */
+.about-card.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card image fills card and has transition effects */
+.about-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.3s ease;
+}
+
+/* On hover, zoom image and apply filter */
+.about-card:hover img {
+    transform: scale(1.05);
+    filter: brightness(0.7) blur(2px);
+}
+
+/* Overlay with text appears on hover */
+.about-card .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Show overlay on hover */
+.about-card:hover .overlay {
+    opacity: 1;
+}
+
+/*PROJECTS SECTION*/
+/* Grid of projects with two columns */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 1000px;
+    width: 100%;
+}
+
+/* Individual project card with hover animation */
+.project-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    height: 250px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    cursor: none; /* Use custom cursor */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* Animation class for project cards */
+.project-card.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Project image fills card */
+.project-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* Slight zoom on hover */
+.project-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Hidden overlay with project info */
+.project-card .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    background: rgba(135, 133, 179, 0.7); /* Soft pink with transparency */
+    color: white;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+/* Slide overlay up on hover */
+.project-card:hover .overlay {
+    transform: translateY(0);
+}
+
+/*CONTACT SECTION */
+/* Row of social media icons */
+.social-icons {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* Style for each social icon */
+.social-icons a {
+    font-size: 32px;
+    color: rgb(255, 255, 255); /* Sage green icons */
+    transition: transform 0.3s ease, color 0.3s ease, opacity 0.5s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Animation class for social icons */
+.social-icons a.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover animation for icons */
+.social-icons a:hover {
+    transform: translateY(-5px);
+    color: rgb(139, 151, 229); /* Soft pink on hover */
+}
+
+/* Contact message under icons */
+.contact-note {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: rgb(255, 255, 255); /* Sage green text */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* Soft shadow for legibility */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s; /* Delayed animation */
+}
+
+section.visible .contact-note {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* MOUSE TRAIL EFFECT */
+/* Star that follows the cursor */
+.star {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M12 0L14.59 8.41 23 12 14.59 15.59 12 24 9.41 15.59 1 12 9.41 8.41z'/%3E%3C/svg%3E");
+    background-size: contain;
+    pointer-events: none;
+    opacity: 0; /* Hidden by default */
+    z-index: 999;
+    transition: opacity 0.3s ease;
+}
+
+/* Generic animation for elements */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.animate-on-scroll.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* RESPONSIVE DESIGN*/
+/* Stack project cards on small screens */
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Slightly smaller about cards */
+    .about-card {
+        min-width: 250px;
+    }
+
+    /* Reduce nav spacing */
+    nav ul li {
+        margin: 0 10px;
+    }
+}
