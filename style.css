@@ -13,10 +13,10 @@ html {
     scroll-snap-type: y mandatory;
 }
 
-/* Prevent horizontal scrolling due to overflow */
+/* Prevent horizontal scrolling */
 body {
     overflow-x: hidden;
-    background-image: url('/Users/mukhlisamamatova/Desktop/PORTFOLIO/star.jpeg'); /* Fallback plaid background */
+    background-image: url('stary background adobe.jpg'); /* Fallback plaid background */
     background-size: cover;
     background-attachment: fixed;
 }
@@ -33,6 +33,24 @@ body {
     transform: translate(-50%, -50%);
     transition: transform 0.1s ease;
     display: none; /* Initially hidden, shown in JS */
+}
+
+/* ===== FLASH OVERLAY ===== */
+.flash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: opacity 0.1s ease-out;
+}
+
+.flash-overlay.active {
+    opacity: 1;
 }
 
 /* ===== SECTION STYLES ===== */
@@ -119,6 +137,44 @@ nav ul li a:hover {
 }
 
 /*HOMEPAGE SECTION */
+/* Polaroid camera container */
+.polaroid-container {
+    position: relative;
+    width: 80%;
+    max-width: 500px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.polaroid-camera {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+/* Red button on the polaroid camera */
+.red-button {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    top: 42%; /* Position adjusted for the button in the image */
+    left: 16%; /* Position adjusted for the button in the image */
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.1s ease;
+}
+
+.red-button:hover {
+    transform: scale(1.1);
+}
+
+.red-button:active {
+    transform: scale(0.95);
+}
+
 /* Image that rotates infinitely */
 .rotating-image {
     width: 200px;
@@ -376,5 +432,16 @@ section.visible .contact-note {
     /* Reduce nav spacing */
     nav ul li {
         margin: 0 10px;
+    }
+    
+    /* Make polaroid camera smaller on mobile */
+    .polaroid-container {
+        max-width: 300px;
+    }
+    
+    /* Adjust red button position for smaller screens */
+    .red-button {
+        width: 30px;
+        height: 30px;
     }
 }
